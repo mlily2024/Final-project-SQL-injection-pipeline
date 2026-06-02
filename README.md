@@ -14,7 +14,7 @@
 
 ## What this repository contains
 
-Two Hybrid Machine-Learning pipelines, each implemented as a self-contained Jupyter notebook, for detecting SQL Injection (SQLi) attacks in web application traffic:
+Two novel Hybrid Machine-Learning pipelines, each implemented as a self-contained Jupyter notebook, for detecting SQL Injection (SQLi) attacks in web application traffic:
 
 1. **`DistilBERT_Stacked_Ensemble_pipeline.ipynb`** — a DistilBERT-Stacked Ensemble (Meta-Learner) pipeline. Uses DistilBERT contextual embeddings as input to a stack of conventional ML and ensemble classifiers (Logistic Regression, XGBoost, SVM), combined under a neural-network meta-learner. Adversarial training is performed with the Fast Gradient Sign Method (FGSM); hyperparameters are tuned with Optuna.
 2. **`BERT_GNN_pipeline_FINAL.ipynb`** — a BERT–Graph-Neural-Network hybrid pipeline. BERT generates contextual embeddings of SQL queries; a GNN models the graph-structured query representation to capture structural patterns. Hyperparameters tuned with Optuna.
