@@ -54,6 +54,8 @@ pip install -r requirements.txt
 
 Then open either notebook in JupyterLab or VS Code and run cells top-to-bottom. Each pipeline is end-to-end self-contained: data loading and preprocessing → embedding extraction → model training → evaluation → adversarial-robustness check → sensitivity analysis. A GPU is recommended for the BERT-GNN training step but not required for inference or for the DistilBERT-Stacked Ensemble.
 
+**Resource requirement.** The DistilBERT (and BERT) embedding-extraction step holds the language model and its full-dataset embeddings in memory simultaneously. End-to-end execution needs approximately **6–8 GB of free RAM** for the DistilBERT-Stacked Ensemble pipeline and **8–12 GB** for BERT-GNN. The notebooks were originally developed on Google Colab (which provides 12–16 GB and a free GPU). If running locally on a machine with 8 GB total RAM, close other applications first or run in Colab via the badge links at the top of each notebook.
+
 ## Acknowledgements
 
 Supervisor: Professor Atta Badii (University of Reading). Acknowledgement also to PhD candidate Ahmed Ashlam for advice during the project's execution. Both acknowledged in the dissertation.
