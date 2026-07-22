@@ -134,6 +134,45 @@ def main():
                  Xtr, ytr, Xte, yte),
     ]
 
+    # ROC + Precision-Recall curves (test set) for the BERT-only heads.
+    try:
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+        from sklearn.metrics import (roc_curve, auc, precision_recall_curve,
+                                     average_precision_score)
+        FIG = os.path.join(HERE, "results")
+        os.makedirs(FIG, exist_ok=True)
+        heads = {"Logistic Regression":
+                 LogisticRegression(max_iter=2000, class_weight="balanced"),
+                 "MLP (159)":
+                 MLPClassifier(hidden_layer_sizes=(159,), max_iter=300, random_state=42)}
+        colours = {"Logistic Regression": "#3b6ea5", "MLP (159)": "#c0504d"}
+        probs = {}
+        for nm, clf in heads.items():
+            clf.fit(Xtr, ytr)
+            probs[nm] = clf.predict_proba(Xte)[:, 1]
+        plt.figure(figsize=(5, 4.2))
+        for nm, p in probs.items():
+            fpr, tpr, _ = roc_curve(yte, p)
+            plt.plot(fpr, tpr, color=colours[nm], label=f"{nm} (AUC={auc(fpr, tpr):.4f})")
+        plt.plot([0, 1], [0, 1], "--", color="grey", lw=1)
+        plt.xlabel("False positive rate"); plt.ylabel("True positive rate")
+        plt.title("BERT-only baselines: ROC (test)"); plt.legend(loc="lower right")
+        plt.grid(alpha=0.3); plt.tight_layout()
+        plt.savefig(os.path.join(FIG, "bert_only_roc.png"), dpi=200, bbox_inches="tight"); plt.close()
+        plt.figure(figsize=(5, 4.2))
+        for nm, p in probs.items():
+            pr, rc, _ = precision_recall_curve(yte, p)
+            plt.plot(rc, pr, color=colours[nm], label=f"{nm} (AP={average_precision_score(yte, p):.4f})")
+        plt.xlabel("Recall"); plt.ylabel("Precision")
+        plt.title("BERT-only baselines: Precision-Recall (test)"); plt.legend(loc="lower left")
+        plt.grid(alpha=0.3); plt.tight_layout()
+        plt.savefig(os.path.join(FIG, "bert_only_pr.png"), dpi=200, bbox_inches="tight"); plt.close()
+        log("saved bert_only_roc.png / bert_only_pr.png")
+    except Exception as e:
+        log(f"curve figures skipped: {e}")
+
     # Hybrid reference from BERT_GNN_pipeline_FINAL.ipynb (same test set).
     hybrid = {"model": "BERT-GNN hybrid (reference)", "accuracy": 0.9948,
               "precision": 0.9948, "recall": 0.9948, "f1": 0.9948,

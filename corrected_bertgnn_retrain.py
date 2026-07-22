@@ -138,11 +138,11 @@ class GNNModel(nn.Module):
         x = self.dropout(F.relu(self.fc1(x)))
         return self.fc2(x)
 
-def run_epoch(model, loader, opt=None):
+def run_epoch(model, loader, opt=None, want_probs=False):
     crit = nn.CrossEntropyLoss(weight=class_weights)
     train = opt is not None
     model.train() if train else model.eval()
-    tot, preds, labs = 0.0, [], []
+    tot, preds, labs, probs = 0.0, [], [], []
     ctx = torch.enable_grad() if train else torch.no_grad()
     with ctx:
         for data in loader:
@@ -154,7 +154,11 @@ def run_epoch(model, loader, opt=None):
                 loss.backward(); opt.step()
             tot += loss.item()
             preds.append(out.argmax(1).cpu()); labs.append(data.y.cpu())
+            if want_probs:
+                probs.append(F.softmax(out, dim=1)[:, 1].cpu())
     preds = torch.cat(preds).numpy(); labs = torch.cat(labs).numpy()
+    if want_probs:
+        return tot/len(loader), preds, labs, torch.cat(probs).numpy()
     return tot/len(loader), preds, labs
 
 def train_with_earlystop(params, max_epochs, patience, tag):
@@ -164,19 +168,21 @@ def train_with_earlystop(params, max_epochs, patience, tag):
     tl = GeoLoader(train_graphs, batch_size=params["batch_size"], shuffle=True)
     vl = GeoLoader(val_graphs, batch_size=params["batch_size"])
     best_vl, best_state, bad = float("inf"), None, 0
+    history = []   # (train_loss, val_loss) per epoch
     for ep in range(max_epochs):
         budget_hit()
-        run_epoch(model, tl, opt)
+        tloss, _, _ = run_epoch(model, tl, opt)
         vloss, vpred, vlab = run_epoch(model, vl)
         vf1 = f1_score(vlab, vpred, average="weighted")
+        history.append((tloss, vloss))
         if vloss < best_vl - 1e-4:
             best_vl, best_state, bad = vloss, {k: v.cpu().clone() for k, v in model.state_dict().items()}, 0
         else:
             bad += 1
-        log(f"    [{tag}] epoch {ep+1} val_loss={vloss:.4f} val_f1={vf1:.4f} (best_vl={best_vl:.4f} bad={bad})")
+        log(f"    [{tag}] epoch {ep+1} train_loss={tloss:.4f} val_loss={vloss:.4f} val_f1={vf1:.4f} (best_vl={best_vl:.4f} bad={bad})")
         if bad >= patience: break
     model.load_state_dict(best_state)
-    return model, best_vl
+    return model, best_vl, history
 
 # ---------------------------------------------------------------- Stage B: val-based HP search (Optuna, resumable)
 HP_JSON = os.path.join(WORK, "hp_results.json")
@@ -190,7 +196,7 @@ if not os.path.exists(best_json):
                   "dropout_rate": trial.suggest_float("dropout_rate", 0.1, 0.5),
                   "lr": trial.suggest_float("lr", 1e-5, 1e-2, log=True),
                   "batch_size": trial.suggest_int("batch_size", 32, 128)}
-        model, _ = train_with_earlystop(params, max_epochs=12, patience=3, tag=f"hp{len(done)}")
+        model, _, _ = train_with_earlystop(params, max_epochs=12, patience=3, tag=f"hp{len(done)}")
         _, vpred, vlab = run_epoch(model, GeoLoader(val_graphs, batch_size=params["batch_size"]))
         vf1 = f1_score(vlab, vpred, average="weighted")
         done.append({"params": params, "val_f1": vf1})
@@ -218,8 +224,48 @@ best_params = json.load(open(best_json))
 
 # ---------------------------------------------------------------- Stage C: final train + single test eval
 log(f"final training with best params {best_params} (early stop on VALIDATION)")
-model, best_vl = train_with_earlystop(best_params, max_epochs=50, patience=5, tag="final")
-_, tpred, tlab = run_epoch(model, GeoLoader(test_graphs, batch_size=best_params["batch_size"]))
+model, best_vl, history = train_with_earlystop(best_params, max_epochs=50, patience=5, tag="final")
+_, tpred, tlab, tprob = run_epoch(model, GeoLoader(test_graphs, batch_size=best_params["batch_size"]),
+                                  want_probs=True)
+
+# --- figures: loss curve, ROC, PR (corrected held-out model) ---------------
+try:
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from sklearn.metrics import roc_curve, auc, precision_recall_curve, average_precision_score
+    FIG = os.path.join(HERE, "results")
+    os.makedirs(FIG, exist_ok=True)
+
+    tr_l = [h[0] for h in history]; va_l = [h[1] for h in history]
+    ep = range(1, len(history) + 1)
+    plt.figure(figsize=(6, 4))
+    plt.plot(ep, tr_l, marker="o", ms=3, label="Training loss")
+    plt.plot(ep, va_l, marker="s", ms=3, label="Validation loss")
+    plt.xlabel("Epoch"); plt.ylabel("Cross-entropy loss")
+    plt.title("Corrected BERT-GNN: training vs validation loss")
+    plt.legend(); plt.grid(alpha=0.3); plt.tight_layout()
+    plt.savefig(os.path.join(FIG, "corrected_loss_curve.png"), dpi=200, bbox_inches="tight"); plt.close()
+
+    fpr, tpr, _ = roc_curve(tlab, tprob); roc_auc = auc(fpr, tpr)
+    plt.figure(figsize=(5, 4.2))
+    plt.plot(fpr, tpr, color="#3b6ea5", label=f"ROC (AUC = {roc_auc:.4f})")
+    plt.plot([0, 1], [0, 1], "--", color="grey", lw=1)
+    plt.xlabel("False positive rate"); plt.ylabel("True positive rate")
+    plt.title("Corrected BERT-GNN: ROC (held-out test)")
+    plt.legend(loc="lower right"); plt.grid(alpha=0.3); plt.tight_layout()
+    plt.savefig(os.path.join(FIG, "corrected_roc.png"), dpi=200, bbox_inches="tight"); plt.close()
+
+    prec, rec, _ = precision_recall_curve(tlab, tprob); ap = average_precision_score(tlab, tprob)
+    plt.figure(figsize=(5, 4.2))
+    plt.plot(rec, prec, color="#3b6ea5", label=f"PR (AP = {ap:.4f})")
+    plt.xlabel("Recall"); plt.ylabel("Precision")
+    plt.title("Corrected BERT-GNN: Precision-Recall (held-out test)")
+    plt.legend(loc="lower left"); plt.grid(alpha=0.3); plt.tight_layout()
+    plt.savefig(os.path.join(FIG, "corrected_pr.png"), dpi=200, bbox_inches="tight"); plt.close()
+    log("saved corrected_loss_curve.png / corrected_roc.png / corrected_pr.png")
+except Exception as e:
+    log(f"figure generation skipped: {e}")
 res = {
     "protocol": "held-out validation: HP search + early stopping on VAL, single eval on the pristine test set",
     "best_params": best_params,
@@ -255,7 +301,19 @@ lines = [
     f"| Corrected (held-out validation) | {c['accuracy']*100:.2f} | {c['precision']*100:.2f} "
     f"| {c['recall']*100:.2f} | {c['f1']*100:.2f} | {c['confusion_matrix']} |",
     "",
-    "Reproduce with `python corrected_bertgnn_retrain.py`.",
+    "### Confusion matrices",
+    "",
+    "![Original BERT-GNN (test used for selection)](cm_original_bertgnn.png)",
+    "![Corrected BERT-GNN (held-out validation)](cm_corrected_bertgnn_heldout.png)",
+    "",
+    "### Training vs validation loss, ROC and Precision-Recall (corrected model)",
+    "",
+    "![Training vs validation loss](corrected_loss_curve.png)",
+    "![ROC (held-out test)](corrected_roc.png)",
+    "![Precision-Recall (held-out test)](corrected_pr.png)",
+    "",
+    "Reproduce the evaluation and figures with `python corrected_bertgnn_retrain.py` "
+    "(confusion-matrix and comparison figures: `python make_result_figures.py`).",
     "",
 ]
 os.makedirs(os.path.dirname(OUT_MD), exist_ok=True)

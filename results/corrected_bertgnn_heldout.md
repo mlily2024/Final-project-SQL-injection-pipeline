@@ -14,4 +14,10 @@ Selected hyperparameters (by validation F1): `{'hidden_dim': 169, 'dropout_rate'
 ![Original BERT-GNN (test used for selection)](cm_original_bertgnn.png)
 ![Corrected BERT-GNN (held-out validation)](cm_corrected_bertgnn_heldout.png)
 
-Reproduce the evaluation with `python corrected_bertgnn_retrain.py`, and the figures with `python make_result_figures.py`.
+### Training vs validation loss, ROC and Precision-Recall (corrected model)
+
+![Training vs validation loss](corrected_loss_curve.png)
+![ROC (held-out test)](corrected_roc.png)
+![Precision-Recall (held-out test)](corrected_pr.png)
+
+Reproduce the evaluation and figures with `python corrected_bertgnn_retrain.py` (confusion-matrix and comparison figures: `python make_result_figures.py`).
