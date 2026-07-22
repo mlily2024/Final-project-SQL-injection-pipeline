@@ -75,6 +75,10 @@ Robustness assessment (dissertation Figure 4.14). Sensitivity score reported in 
 
 ![BERT-GNN sensitivity analysis](results/bertgnn_20_performing_a_sensitivity_analysis_for_bert.png)
 
+### Ablation — BERT-only baseline (isolating the GNN)
+
+A BERT-only baseline (BERT `[CLS]` embedding into a simple Logistic Regression / MLP head, no graph or GNN) trained on the identical 70/30 split and 9,276-row test set. On this near-saturated benchmark the BERT-only baselines match, and marginally exceed, the hybrid on accuracy, so the GNN adds no measurable accuracy here. Full table and reproduction: [`results/ablation_bert_only.md`](results/ablation_bert_only.md) (run `python bert_only_ablation.py`).
+
 ### Comparison with conventional ML and ensemble classifiers
 
 Per-model performance plots from the ML / ensemble benchmark (dissertation Table 4.4 — DistilBERT-Stacked Ensemble + BERT-GNN both outperform all conventional baselines).
