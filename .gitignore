@@ -1,0 +1,4 @@
+
+# local caches / checkpoints (not part of the repo)
+__pycache__/
+.corrected_work/
