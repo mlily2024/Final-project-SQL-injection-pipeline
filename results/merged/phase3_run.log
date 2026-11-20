@@ -1,0 +1,74 @@
+/usr/local/lib/python3.13/dist-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+23:22:52 train 21643 (GNN: tr 18396 val 3247), test 9276, malicious test 3446, HTTPParams 30156; device cuda
+Loading weights:   0%|          | 0/100 [00:00<?, ?it/s]Loading weights: 100%|██████████| 100/100 [00:00<00:00, 4816.44it/s]
+[transformers] [1mDistilBertModel LOAD REPORT[0m from: distilbert-base-uncased
+Key                     | Status     |  | 
+------------------------+------------+--+-
+vocab_layer_norm.bias   | UNEXPECTED |  | 
+vocab_layer_norm.weight | UNEXPECTED |  | 
+vocab_transform.weight  | UNEXPECTED |  | 
+vocab_projector.bias    | UNEXPECTED |  | 
+vocab_transform.bias    | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+23:23:25 DistilBERT train/test features ready (33s)
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 4308.98it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-uncased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+23:25:32 BERT features and structure graphs ready (160s)
+23:25:42   GNN trial 0: val weighted F1 0.9982 {'hid': 116, 'drop': 0.4802857225639665, 'lr': 0.001570297088405539, 'bs': 90}
+23:26:02   GNN trial 1: val weighted F1 0.9914 {'hid': 67, 'drop': 0.16239780813448107, 'lr': 1.493656855461762e-05, 'bs': 116}
+23:26:21   GNN trial 2: val weighted F1 0.9914 {'hid': 167, 'drop': 0.3832290311184182, 'lr': 1.1527987128232396e-05, 'bs': 126}
+23:26:50   GNN trial 3: val weighted F1 0.9975 {'hid': 219, 'drop': 0.18493564427131048, 'lr': 3.511356313970405e-05, 'bs': 49}
+23:27:07   GNN trial 4: val weighted F1 0.9982 {'hid': 100, 'drop': 0.3099025726528951, 'lr': 0.00019762189340280086, 'bs': 60}
+23:27:30   GNN trial 5: val weighted F1 0.9982 {'hid': 169, 'drop': 0.15579754426081674, 'lr': 7.52374288453485e-05, 'bs': 67}
+23:27:54   GNN trial 6: val weighted F1 0.9972 {'hid': 134, 'drop': 0.41407038455720546, 'lr': 3.972110727381908e-05, 'bs': 81}
+23:28:14   GNN trial 7: val weighted F1 0.9982 {'hid': 165, 'drop': 0.1185801650879991, 'lr': 0.0006647135865318024, 'bs': 48}
+23:28:14 GNN hyperparameters {'hid': 100, 'drop': 0.3099025726528951, 'lr': 0.00019762189340280086, 'bs': 60}
+23:28:24 seed 42: SVM (+5-fold out-of-fold)
+23:31:28 seed 42: XGBoost
+23:33:07 seed 42: BERT-GNN
+23:33:30 seed 42: BERT-only MLP
+23:33:49 seed 1: SVM (+5-fold out-of-fold)
+23:36:50 seed 1: XGBoost
+23:38:29 seed 1: BERT-GNN
+23:38:51 seed 1: BERT-only MLP
+23:39:20 seed 7: SVM (+5-fold out-of-fold)
+23:42:28 seed 7: XGBoost
+23:44:07 seed 7: BERT-GNN
+23:44:29 seed 7: BERT-only MLP
+23:45:00 seed 13: SVM (+5-fold out-of-fold)
+23:48:04 seed 13: XGBoost
+23:49:44 seed 13: BERT-GNN
+23:50:03 seed 13: BERT-only MLP
+23:50:44 seed 123: SVM (+5-fold out-of-fold)
+23:53:45 seed 123: XGBoost
+23:55:24 seed 123: BERT-GNN
+23:55:58 seed 123: BERT-only MLP
+23:56:51 all seeds trained
+23:57:10 clean test predictions done
+23:58:21 transform url_encode done
+23:59:28 transform double_url_encode done
+00:00:28 transform inline_comment done
+00:01:09 transform keyword_split done
+00:01:50 transform mysql_versioned_comment done
+00:02:24 transform case_random done
+00:02:58 transform tab_whitespace done
+00:03:38 transform mixed_whitespace done
+00:04:48 transform url_encode+case_random done
+00:07:45 HTTPParams done
+00:08:44 noise test done
+00:08:45 done: results/merged/phase3_common_robustness.md

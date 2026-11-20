@@ -1,0 +1,20 @@
+# Exact versions used for the merged-paper CPU runs (merged_phase3b to 3e scripts),
+# Python 3.14.0 on Windows 11, Intel Core i5-1335U, no GPU.
+# torch is the CPU build: pip install torch==2.10.0 --index-url https://download.pytorch.org/whl/cpu
+# The GPU runs (merged_phase2 and merged_phase3) used the versions listed in
+# results/merged/phase2_versions.txt and results/merged/phase3_versions.txt.
+# sqlmap tamper scripts: git clone --branch 1.9.9 https://github.com/sqlmapproject/sqlmap
+numpy==2.4.4
+pandas==2.3.3
+scipy==1.17.0
+scikit-learn==1.8.0
+xgboost==3.4.1
+torch==2.10.0
+torch_geometric==2.7.0
+transformers==4.57.6
+tokenizers==0.22.2
+sqlparse==0.5.5
+optuna==4.9.0
+matplotlib==3.10.8
+imbalanced-learn==0.14.2
+nltk==3.10.4

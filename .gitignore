@@ -10,3 +10,13 @@ __pycache__/
 
 # McNemar reproduction caches (embeddings/models)
 .distil_work/
+
+# merged-paper run caches and local logs (not part of the repo)
+.merged_work/
+.merged_work_*.log
+# local Windows launchers and unused GPU notebooks for phase 3b (the run used the CPU)
+run_phase3*.bat
+merged_phase3b_colab.ipynb
+merged_phase3b_kaggle.ipynb
+# release staging (models are published as GitHub Release assets)
+release_assets/

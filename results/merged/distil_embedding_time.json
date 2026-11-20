@@ -1,0 +1,7 @@
+{
+  "test_embedding_seconds": 29.839351718999865,
+  "ms_per_query": 3.2168339498706193,
+  "batch_size": 32,
+  "device": "cuda",
+  "note": "time summed over chunks embedded in this run"
+}

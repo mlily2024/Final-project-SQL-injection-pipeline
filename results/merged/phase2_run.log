@@ -1,0 +1,62 @@
+21:49:20 train 21643, test 9276 (benign 5830, malicious 3446)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/100 [00:00<?, ?it/s]Loading weights: 100%|██████████| 100/100 [00:00<00:00, 5458.42it/s]
+[transformers] [1mDistilBertModel LOAD REPORT[0m from: distilbert-base-uncased
+Key                     | Status     |  | 
+------------------------+------------+--+-
+vocab_transform.bias    | UNEXPECTED |  | 
+vocab_transform.weight  | UNEXPECTED |  | 
+vocab_layer_norm.weight | UNEXPECTED |  | 
+vocab_projector.bias    | UNEXPECTED |  | 
+vocab_layer_norm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+21:49:28 embedding train set
+21:49:32   train: 1024/21643
+21:49:35   train: 2048/21643
+21:49:38   train: 3072/21643
+21:49:41   train: 4096/21643
+21:49:43   train: 5120/21643
+21:49:46   train: 6144/21643
+21:49:49   train: 7168/21643
+21:49:52   train: 8192/21643
+21:49:55   train: 9216/21643
+21:49:57   train: 10240/21643
+21:50:00   train: 11264/21643
+21:50:03   train: 12288/21643
+21:50:06   train: 13312/21643
+21:50:09   train: 14336/21643
+21:50:11   train: 15360/21643
+21:50:14   train: 16384/21643
+21:50:17   train: 17408/21643
+21:50:21   train: 18432/21643
+21:50:25   train: 19456/21643
+21:50:28   train: 20480/21643
+21:50:31   train: 21504/21643
+21:50:31   train: 21643/21643
+21:50:31 embedding test set (timed)
+21:50:34   test: 1024/9276
+21:50:37   test: 2048/9276
+21:50:40   test: 3072/9276
+21:50:44   test: 4096/9276
+21:50:47   test: 5120/9276
+21:50:50   test: 6144/9276
+21:50:54   test: 7168/9276
+21:50:57   test: 8192/9276
+21:51:01   test: 9216/9276
+21:51:01   test: 9276/9276
+21:51:01 embeddings (21643, 768) / (9276, 768); 3.22 ms per test query (cuda)
+21:51:01 GridSearchCV Logistic Regression
+21:51:22   Logistic Regression: acc 99.77%  {'C': 1}  train 20s exec 0.0241s
+21:51:22 GridSearchCV SVM
+22:22:02   SVM: acc 99.84%  {'C': 10, 'kernel': 'rbf'}  train 1837s exec 3.1982s
+22:22:02 GridSearchCV XGBoost
+/usr/local/lib/python3.13/dist-packages/joblib/externals/loky/process_executor.py:787: UserWarning: A worker stopped while some jobs were given to the executor. This can be caused by a too short worker timeout or by a memory leak.
+  warnings.warn(
+22:26:07   XGBoost: acc 99.70%  {'n_estimators': 100}  train 246s exec 0.0408s
+22:26:07 out-of-fold meta-features (cross_val_predict, cv=5)
+22:29:59 Optuna: 100 trials on train meta-features only
+22:33:07 best params {'hidden_dim': 195, 'dropout_rate': 0.48280235776814573, 'lr': 0.006257488041237617, 'epochs': 92, 'epsilon': 0.1004122390391398} (CV adversarial acc 0.9972)
+22:33:11 ensemble: acc 99.84%  FGSM 99.80%
+22:33:11 done: results/merged/phase2_distilbert_7030.md

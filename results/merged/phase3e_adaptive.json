@@ -1,0 +1,487 @@
+{
+ "seeds": [
+  42,
+  1,
+  7
+ ],
+ "n_attacks": 100,
+ "budget": 160,
+ "A": {
+  "ENS": [
+   {
+    "start_missed": 0,
+    "evaded": 10,
+    "n_start": 100,
+    "evasion": 10.0,
+    "median_queries": 56.0
+   },
+   {
+    "start_missed": 0,
+    "evaded": 10,
+    "n_start": 100,
+    "evasion": 10.0,
+    "median_queries": 48.0
+   },
+   {
+    "start_missed": 0,
+    "evaded": 9,
+    "n_start": 100,
+    "evasion": 9.0,
+    "median_queries": 104.0
+   }
+  ],
+  "SVM": [
+   {
+    "start_missed": 0,
+    "evaded": 9,
+    "n_start": 100,
+    "evasion": 9.0,
+    "median_queries": 64.0
+   },
+   {
+    "start_missed": 0,
+    "evaded": 9,
+    "n_start": 100,
+    "evasion": 9.0,
+    "median_queries": 72.0
+   },
+   {
+    "start_missed": 0,
+    "evaded": 9,
+    "n_start": 100,
+    "evasion": 9.0,
+    "median_queries": 120.0
+   }
+  ],
+  "GNN": [
+   {
+    "start_missed": 0,
+    "evaded": 9,
+    "n_start": 100,
+    "evasion": 9.0,
+    "median_queries": 64.0
+   },
+   {
+    "start_missed": 0,
+    "evaded": 11,
+    "n_start": 100,
+    "evasion": 11.0,
+    "median_queries": 40.0
+   },
+   {
+    "start_missed": 0,
+    "evaded": 9,
+    "n_start": 100,
+    "evasion": 9.0,
+    "median_queries": 112.0
+   }
+  ],
+  "BERT": [
+   {
+    "start_missed": 0,
+    "evaded": 9,
+    "n_start": 100,
+    "evasion": 9.0,
+    "median_queries": 40.0
+   },
+   {
+    "start_missed": 0,
+    "evaded": 10,
+    "n_start": 100,
+    "evasion": 10.0,
+    "median_queries": 56.0
+   },
+   {
+    "start_missed": 0,
+    "evaded": 7,
+    "n_start": 100,
+    "evasion": 7.0,
+    "median_queries": 64.0
+   }
+  ]
+ },
+ "B": {
+  "ENS": [
+   {
+    "start_missed": 0,
+    "evaded": 2,
+    "n_start": 100,
+    "evasion": 2.0,
+    "median_queries": 36.0
+   },
+   {
+    "start_missed": 0,
+    "evaded": 0,
+    "n_start": 100,
+    "evasion": 0.0,
+    "median_queries": null
+   },
+   {
+    "start_missed": 0,
+    "evaded": 1,
+    "n_start": 100,
+    "evasion": 1.0,
+    "median_queries": 8.0
+   }
+  ],
+  "SVM": [
+   {
+    "start_missed": 0,
+    "evaded": 2,
+    "n_start": 100,
+    "evasion": 2.0,
+    "median_queries": 36.0
+   },
+   {
+    "start_missed": 0,
+    "evaded": 1,
+    "n_start": 100,
+    "evasion": 1.0,
+    "median_queries": 64.0
+   },
+   {
+    "start_missed": 0,
+    "evaded": 1,
+    "n_start": 100,
+    "evasion": 1.0,
+    "median_queries": 8.0
+   }
+  ],
+  "GNN": [
+   {
+    "start_missed": 0,
+    "evaded": 3,
+    "n_start": 100,
+    "evasion": 3.0,
+    "median_queries": 16.0
+   },
+   {
+    "start_missed": 0,
+    "evaded": 3,
+    "n_start": 100,
+    "evasion": 3.0,
+    "median_queries": 64.0
+   },
+   {
+    "start_missed": 0,
+    "evaded": 2,
+    "n_start": 100,
+    "evasion": 2.0,
+    "median_queries": 12.0
+   }
+  ],
+  "BERT": [
+   {
+    "start_missed": 0,
+    "evaded": 3,
+    "n_start": 100,
+    "evasion": 3.0,
+    "median_queries": 24.0
+   },
+   {
+    "start_missed": 0,
+    "evaded": 2,
+    "n_start": 100,
+    "evasion": 2.0,
+    "median_queries": 32.0
+   },
+   {
+    "start_missed": 0,
+    "evaded": 9,
+    "n_start": 100,
+    "evasion": 9.0,
+    "median_queries": 16.0
+   }
+  ]
+ },
+ "C": [
+  {
+   "result": "Mutation attack, raw",
+   "model": "ENS",
+   "rate": 9.666666666666666,
+   "lo": 6.8149855923937155,
+   "hi": 13.538251094090295,
+   "n": 300
+  },
+  {
+   "result": "Mutation attack, defended",
+   "model": "ENS",
+   "rate": 1.0,
+   "lo": 0.34065567627181126,
+   "hi": 2.898400463506283,
+   "n": 300
+  },
+  {
+   "result": "Mutation attack, raw",
+   "model": "SVM",
+   "rate": 9.0,
+   "lo": 6.2589807394965895,
+   "hi": 12.777780520317735,
+   "n": 300
+  },
+  {
+   "result": "Mutation attack, defended",
+   "model": "SVM",
+   "rate": 1.3333333333333333,
+   "lo": 0.5196877684679466,
+   "hi": 3.3776060846449907,
+   "n": 300
+  },
+  {
+   "result": "Mutation attack, raw",
+   "model": "GNN",
+   "rate": 9.666666666666666,
+   "lo": 6.8149855923937155,
+   "hi": 13.538251094090295,
+   "n": 300
+  },
+  {
+   "result": "Mutation attack, defended",
+   "model": "GNN",
+   "rate": 2.6666666666666665,
+   "lo": 1.3572906766976816,
+   "hi": 5.172954029754628,
+   "n": 300
+  },
+  {
+   "result": "Mutation attack, raw",
+   "model": "BERT",
+   "rate": 8.666666666666666,
+   "lo": 5.982848995477099,
+   "hi": 12.395674551002385,
+   "n": 300
+  },
+  {
+   "result": "Mutation attack, defended",
+   "model": "BERT",
+   "rate": 4.666666666666667,
+   "lo": 2.799867455083086,
+   "hi": 7.6798035313782815,
+   "n": 300
+  },
+  {
+   "result": "Attacks of 1-8 tokens detected, raw",
+   "model": "ENS",
+   "rate": 86.36363636363636,
+   "lo": 76.07018517959348,
+   "hi": 92.65676265665311,
+   "n": 66
+  },
+  {
+   "result": "Attacks of 1-8 tokens detected, decoded",
+   "model": "ENS",
+   "rate": 90.9090909090909,
+   "lo": 81.55105617491718,
+   "hi": 95.76676014086023,
+   "n": 66
+  },
+  {
+   "result": "Attacks of 1-8 tokens detected, raw",
+   "model": "SVM",
+   "rate": 86.36363636363636,
+   "lo": 76.07018517959348,
+   "hi": 92.65676265665311,
+   "n": 66
+  },
+  {
+   "result": "Attacks of 1-8 tokens detected, decoded",
+   "model": "SVM",
+   "rate": 87.87878787878788,
+   "lo": 77.86234136612515,
+   "hi": 93.72822929663171,
+   "n": 66
+  },
+  {
+   "result": "Attacks of 1-8 tokens detected, raw",
+   "model": "GNN",
+   "rate": 78.78787878787878,
+   "lo": 67.48670057937917,
+   "hi": 86.92213312431602,
+   "n": 66
+  },
+  {
+   "result": "Attacks of 1-8 tokens detected, decoded",
+   "model": "GNN",
+   "rate": 81.81818181818181,
+   "lo": 70.85458078248001,
+   "hi": 89.28149857423577,
+   "n": 66
+  },
+  {
+   "result": "Attacks of 1-8 tokens detected, raw",
+   "model": "BERT",
+   "rate": 78.78787878787878,
+   "lo": 67.48670057937917,
+   "hi": 86.92213312431602,
+   "n": 66
+  },
+  {
+   "result": "Attacks of 1-8 tokens detected, decoded",
+   "model": "BERT",
+   "rate": 81.81818181818181,
+   "lo": 70.85458078248001,
+   "hi": 89.28149857423577,
+   "n": 66
+  },
+  {
+   "result": "Unseen type 'time-based' detected",
+   "model": "ENS",
+   "rate": 97.90076335877863,
+   "lo": 96.2804232354155,
+   "hi": 98.82386562700081,
+   "n": 524
+  },
+  {
+   "result": "Unseen type 'time-based' detected",
+   "model": "SVM",
+   "rate": 98.2824427480916,
+   "lo": 96.76827439136198,
+   "hi": 99.09381756955963,
+   "n": 524
+  },
+  {
+   "result": "Unseen type 'time-based' detected",
+   "model": "GNN",
+   "rate": 96.94656488549619,
+   "lo": 95.09785447383223,
+   "hi": 98.11192664232081,
+   "n": 524
+  },
+  {
+   "result": "Unseen type 'time-based' detected",
+   "model": "BERT",
+   "rate": 95.41984732824427,
+   "lo": 93.275447331791,
+   "hi": 96.90312139034081,
+   "n": 524
+  },
+  {
+   "result": "Unseen type 'error-based' detected",
+   "model": "ENS",
+   "rate": 100.0,
+   "lo": 98.9143164625075,
+   "hi": 99.99999999999997,
+   "n": 350
+  },
+  {
+   "result": "Unseen type 'error-based' detected",
+   "model": "SVM",
+   "rate": 100.0,
+   "lo": 98.9143164625075,
+   "hi": 99.99999999999997,
+   "n": 350
+  },
+  {
+   "result": "Unseen type 'error-based' detected",
+   "model": "GNN",
+   "rate": 100.0,
+   "lo": 98.9143164625075,
+   "hi": 99.99999999999997,
+   "n": 350
+  },
+  {
+   "result": "Unseen type 'error-based' detected",
+   "model": "BERT",
+   "rate": 100.0,
+   "lo": 98.9143164625075,
+   "hi": 99.99999999999997,
+   "n": 350
+  },
+  {
+   "result": "Unseen type 'union-based' detected",
+   "model": "ENS",
+   "rate": 97.09677419354838,
+   "lo": 95.45767719486552,
+   "hi": 98.15582982358274,
+   "n": 620
+  },
+  {
+   "result": "Unseen type 'union-based' detected",
+   "model": "SVM",
+   "rate": 97.74193548387096,
+   "lo": 96.24563424321975,
+   "hi": 98.6502495837004,
+   "n": 620
+  },
+  {
+   "result": "Unseen type 'union-based' detected",
+   "model": "GNN",
+   "rate": 85.48387096774194,
+   "lo": 82.4924316707103,
+   "hi": 88.03829279524389,
+   "n": 620
+  },
+  {
+   "result": "Unseen type 'union-based' detected",
+   "model": "BERT",
+   "rate": 96.61290322580645,
+   "lo": 94.87758362205389,
+   "hi": 97.77414079004048,
+   "n": 620
+  },
+  {
+   "result": "Unseen type 'boolean / tautology' detected",
+   "model": "ENS",
+   "rate": 100.0,
+   "lo": 99.71003325982515,
+   "hi": 99.99999999999999,
+   "n": 1321
+  },
+  {
+   "result": "Unseen type 'boolean / tautology' detected",
+   "model": "SVM",
+   "rate": 100.0,
+   "lo": 99.71003325982515,
+   "hi": 99.99999999999999,
+   "n": 1321
+  },
+  {
+   "result": "Unseen type 'boolean / tautology' detected",
+   "model": "GNN",
+   "rate": 99.39439818319455,
+   "lo": 98.8095205560355,
+   "hi": 99.69282115787203,
+   "n": 1321
+  },
+  {
+   "result": "Unseen type 'boolean / tautology' detected",
+   "model": "BERT",
+   "rate": 98.4102952308857,
+   "lo": 97.58192556476952,
+   "hi": 98.95791738702184,
+   "n": 1321
+  },
+  {
+   "result": "Unseen type 'other' detected",
+   "model": "ENS",
+   "rate": 94.4267515923567,
+   "lo": 92.34759052591215,
+   "hi": 95.96568292743437,
+   "n": 628
+  },
+  {
+   "result": "Unseen type 'other' detected",
+   "model": "SVM",
+   "rate": 94.10828025477707,
+   "lo": 91.98455948941967,
+   "hi": 95.69564390332937,
+   "n": 628
+  },
+  {
+   "result": "Unseen type 'other' detected",
+   "model": "GNN",
+   "rate": 92.99363057324841,
+   "lo": 90.72480683721928,
+   "hi": 94.73965134343865,
+   "n": 628
+  },
+  {
+   "result": "Unseen type 'other' detected",
+   "model": "BERT",
+   "rate": 92.67515923566879,
+   "lo": 90.36761773190469,
+   "hi": 94.46377038815578,
+   "n": 628
+  }
+ ]
+}

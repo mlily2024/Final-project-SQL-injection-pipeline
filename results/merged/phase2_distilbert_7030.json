@@ -1,0 +1,90 @@
+{
+  "split": "70/30, random_state=42",
+  "n_train": 21643,
+  "n_test": 9276,
+  "embedding": {
+    "test_embedding_seconds": 29.839351718999865,
+    "ms_per_query": 3.2168339498706193,
+    "batch_size": 32,
+    "device": "cuda",
+    "note": "time summed over chunks embedded in this run"
+  },
+  "models": {
+    "Logistic Regression": {
+      "accuracy": 99.77360931435963,
+      "weighted_f1": 99.77362943390384,
+      "mal_precision": 99.65207306465642,
+      "mal_recall": 99.73882762623332,
+      "mal_f1": 99.69543147208122,
+      "fpr": 0.2058319039451115,
+      "mcc": 0.9951530611824292,
+      "fp": 12,
+      "fn": 9,
+      "best_params": {
+        "C": 1
+      },
+      "train_s": 20.400545104999992,
+      "test_exec_s": 0.024145480000015596
+    },
+    "SVM": {
+      "accuracy": 99.83829236739975,
+      "weighted_f1": 99.83826832366948,
+      "mal_precision": 99.8546934030805,
+      "mal_recall": 99.70980847359257,
+      "mal_f1": 99.78219834470742,
+      "fpr": 0.08576329331046312,
+      "mcc": 0.996536750825469,
+      "fp": 5,
+      "fn": 10,
+      "best_params": {
+        "C": 10,
+        "kernel": "rbf"
+      },
+      "train_s": 1836.779426255,
+      "test_exec_s": 3.1981810870001937
+    },
+    "XGBoost": {
+      "accuracy": 99.69814575247952,
+      "weighted_f1": 99.69801954280541,
+      "mal_precision": 99.7960372960373,
+      "mal_recall": 99.3905977945444,
+      "mal_f1": 99.59290491421925,
+      "fpr": 0.12006861063464837,
+      "mcc": 0.9935357704392812,
+      "fp": 7,
+      "fn": 21,
+      "best_params": {
+        "n_estimators": 100
+      },
+      "train_s": 245.5422282540003,
+      "test_exec_s": 0.040823067000019364
+    },
+    "DistilBERT-Stacked Ensemble": {
+      "accuracy": 99.83829236739975,
+      "weighted_f1": 99.83827795495245,
+      "mal_precision": 99.82573337205926,
+      "mal_recall": 99.73882762623332,
+      "mal_f1": 99.7822615764262,
+      "fpr": 0.10291595197255575,
+      "mcc": 0.9965367367439445,
+      "fp": 6,
+      "fn": 9,
+      "fgsm_adv_accuracy": 99.79517459869385,
+      "best_params": {
+        "hidden_dim": 195,
+        "dropout_rate": 0.48280235776814573,
+        "lr": 0.006257488041237617,
+        "epochs": 92,
+        "epsilon": 0.1004122390391398
+      },
+      "train_s": 0.4355634810003721,
+      "test_exec_s": 0.0002953170001092076,
+      "test_exec_incl_base_models_s": 3.7663305280002533
+    }
+  },
+  "mcnemar_svm_vs_ensemble": {
+    "svm_right_ens_wrong": 2,
+    "ens_right_svm_wrong": 2,
+    "exact_p": 1.0
+  }
+}
